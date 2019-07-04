@@ -14,13 +14,33 @@
 
 "use strict";
 
-const CreateRoutes = (router, routes) => {
+/**
+ * this function create custom routes with parameters
+ * @param {Object} routes The routes, the routes definition, mandatory
+ * @param {Function} router The router, an express function, mandatory
+ * @param {Object} log The log function, optional
+ * @return {VoidFunction} return nothing
+ */
+const CreateRoutes = (routes, router, log = console) => {
+  if (!routes || typeof routes !== "object") {
+    throw new Error("The routes parameter is required and must be an object");
+  }
+  if (!router || typeof router !== "function") {
+    throw new Error(
+      "The router parameter is required and must be an express router function"
+    );
+  }
+  if (log && typeof log !== "object") {
+    throw new Error("The log parameter must be an object");
+  }
+  log.info("Creating routes");
   Object.keys(routes).forEach(route => {
     if (typeof routes[route].resources === "object") {
       Object.keys(routes[route].resources).forEach(actions => {
         if (typeof routes[route].resources[actions] === "object") {
           routes[route].resources[actions].forEach(action => {
             const URL = route + actions;
+            log.info(`${action.method.toLowerCase()} ${URL.toLowerCase()}`);
 
             if (typeof action.action === "string") {
               router[action.method.toLowerCase()](
@@ -42,6 +62,7 @@ const CreateRoutes = (router, routes) => {
       });
     }
   });
+  log.info("Finished creating routes");
 };
 
 module.exports = { CreateRoutes };
