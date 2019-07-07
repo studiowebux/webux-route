@@ -1,11 +1,11 @@
-# Webux Router
+# Webux Route
 
 This module create route based on a configuration file, you have to provide the route structure, the action and the middlewares
 
 # Installation
 
 ```bash
-npm i --save webux-router
+npm i --save webux-route
 ```
 
 # Usage
@@ -60,7 +60,7 @@ Route creation example,
 const express = require("express");
 const router = express.Router();
 const app = express();
-const { CreateRoutes } = require("webux-router");
+const { CreateRoutes } = require("webux-route");
 
 const routes = {...};
 
