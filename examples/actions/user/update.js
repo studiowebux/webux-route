@@ -3,5 +3,7 @@ module.exports = async (req, res, next) => {
     console.log("I'm doing something great, ");
   }, 5000);
 
+  console.log(req.params.id)
+
   return res.status(200).send("Update !");
 };

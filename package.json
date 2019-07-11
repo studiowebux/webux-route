@@ -5,6 +5,11 @@
   "main": "index.js",
   "directories": {
     "test": "tests"
+  },  
+  "homepage": "https://github.com/studiowebux/webux-route",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/studiowebux/webux-route.git"
   },
   "devDependencies": {
     "express": "^4.17.1",
