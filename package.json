@@ -1,11 +1,11 @@
 {
   "name": "webux-route",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Route generator",
   "main": "index.js",
   "directories": {
     "test": "tests"
-  },  
+  },
   "homepage": "https://github.com/studiowebux/webux-route",
   "repository": {
     "type": "git",
