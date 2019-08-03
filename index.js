@@ -24,52 +24,62 @@ const { sanitizeURL } = require("./lib/utils");
  * @return {VoidFunction} return nothing
  */
 const CreateRoutes = (routes, router, log = console) => {
-  try {
-    if (!routes || typeof routes !== "object") {
-      throw new Error("The routes parameter is required and must be an object");
-    }
-    if (!router || typeof router !== "function") {
-      throw new Error(
-        "The router parameter is required and must be an express router function"
-      );
-    }
-    if (log && typeof log !== "object") {
-      throw new Error("The log parameter must be an object");
-    }
-    log.info("Creating routes");
-    Object.keys(routes).forEach(route => {
-      if (typeof routes[route].resources === "object") {
-        Object.keys(routes[route].resources).forEach(actions => {
-          if (typeof routes[route].resources[actions] === "object") {
-            routes[route].resources[actions].forEach(action => {
-              let URL = route + actions;
-              URL = sanitizeURL(URL);
-              log.info(`${action.method.toLowerCase()} ${URL.toLowerCase()}`);
-
-              if (typeof action.action === "string") {
-                router[action.method.toLowerCase()](
-                  URL.toLowerCase(),
-                  action.middlewares,
-                  require(action.action)
-                );
-              } else if (typeof action.action === "function") {
-                router[action.method.toLowerCase()](
-                  URL.toLowerCase(),
-                  action.middlewares,
-                  action.action
-                );
-              } else {
-                throw new Error("The action must be a path or a function.");
-              }
-            });
-          }
-        });
+  return new Promise((resolve, reject) => {
+    try {
+      if (!routes || typeof routes !== "object") {
+        return reject(
+          new Error("The routes parameter is required and must be an object")
+        );
       }
-    });
-    log.info("Finished creating routes");
-  } catch (e) {
-    console.error("\x1b[31m", e, "\x1b[0m");
-  }
+      if (!router || typeof router !== "function") {
+        return reject(
+          new Error(
+            "The router parameter is required and must be an express router function"
+          )
+        );
+      }
+      if (log && typeof log !== "object") {
+        return reject(new Error("The log parameter must be an object"));
+      }
+      log.info("Creating routes");
+      Object.keys(routes).forEach(route => {
+        if (typeof routes[route].resources === "object") {
+          Object.keys(routes[route].resources).forEach(actions => {
+            if (typeof routes[route].resources[actions] === "object") {
+              routes[route].resources[actions].forEach(action => {
+                let URL = route + actions;
+                URL = sanitizeURL(URL);
+                log.info(`${action.method.toLowerCase()} ${URL.toLowerCase()}`);
+
+                if (typeof action.action === "string") {
+                  router[action.method.toLowerCase()](
+                    URL.toLowerCase(),
+                    action.middlewares,
+                    require(action.action)
+                  );
+                } else if (typeof action.action === "function") {
+                  router[action.method.toLowerCase()](
+                    URL.toLowerCase(),
+                    action.middlewares,
+                    action.action
+                  );
+                } else {
+                  return reject(
+                    new Error("The action must be a path or a function.")
+                  );
+                }
+              });
+            }
+          });
+        }
+      });
+      log.info("Finished creating routes");
+      return resolve();
+    } catch (e) {
+      console.error("\x1b[31m", e, "\x1b[0m");
+      throw e;
+    }
+  });
 };
 
 module.exports = { CreateRoutes };
