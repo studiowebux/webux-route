@@ -26,7 +26,7 @@ const CreateLocal = Joi.object().keys({
       .required(),
     fullname: Joi.string().required(),
   },
-});
+}).required();
 
 const Update = Joi.object().keys({
   user: {
@@ -35,7 +35,7 @@ const Update = Joi.object().keys({
     ),
     fullname: Joi.string().required(),
   },
-});
+}).required();
 
 const UpdateProfile = Joi.object().keys({
   user: {
@@ -47,7 +47,7 @@ const UpdateProfile = Joi.object().keys({
       /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i
     ),
   },
-});
+}).required();
 
 const ForceLogout = Joi.object().keys({
   userID: Joi.string().regex(/^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i),

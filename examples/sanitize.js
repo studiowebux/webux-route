@@ -9,7 +9,7 @@ const routes = {
         {
           method: "get",
           middlewares: [],
-          action: __dirname + "/actions/user/find"
+          action: require(__dirname + "/actions/user/find").route
         }
       ]
     }

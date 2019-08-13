@@ -36,29 +36,29 @@ const routes = {
         {
           method: "get",
           middlewares: [isAuthenticated(), query()],
-          action: __dirname + "/actions/user/find"
+          action: require(__dirname + "/actions/user/find").route
         },
         {
           method: "post",
           middlewares: [],
-          action: __dirname + "/actions/user/create"
+          action: require(__dirname + "/actions/user/create").route
         }
       ],
       "/:id": [
         {
           method: "get",
           middlewares: [webuxValidator.MongoID(userValidator.MongoID)],
-          action: __dirname + "/actions/user/findOne"
+          action: require(__dirname + "/actions/user/findOne").route
         },
         {
           method: "put",
           middlewares: [],
-          action: __dirname + "/actions/user/update"
+          action: require(__dirname + "/actions/user/update").route
         },
         {
           method: "delete",
           middlewares: [],
-          action: __dirname + "/actions/user/remove"
+          action: require(__dirname + "/actions/user/remove").route
         }
       ]
     }

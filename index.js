@@ -14,7 +14,7 @@
 
 "use strict";
 
-const { sanitizeURL } = require("./lib/utils");
+const { sanitizeURL, routeType } = require("./lib/utils");
 
 /**
  * this function create custom routes with parameters
@@ -51,23 +51,7 @@ const CreateRoutes = (routes, router, log = console) => {
                 URL = sanitizeURL(URL);
                 log.info(`${action.method.toLowerCase()} ${URL.toLowerCase()}`);
 
-                if (typeof action.action === "string") {
-                  router[action.method.toLowerCase()](
-                    URL.toLowerCase(),
-                    action.middlewares,
-                    require(action.action)
-                  );
-                } else if (typeof action.action === "function") {
-                  router[action.method.toLowerCase()](
-                    URL.toLowerCase(),
-                    action.middlewares,
-                    action.action
-                  );
-                } else {
-                  return reject(
-                    new Error("The action must be a path or a function.")
-                  );
-                }
+                routeType(router, action, URL);
               });
             }
           });

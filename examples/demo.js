@@ -1,3 +1,5 @@
+// this is only to test the logic behind the express router
+
 const express = require("express");
 const router = express.Router();
 const app = express();
