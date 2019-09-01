@@ -19,13 +19,16 @@ const { sanitizeURL, routeType } = require("./lib/utils");
 function processAction(action, actions, route, router, log) {
   return new Promise((resolve, reject) => {
     try {
+      log.debug("* Process Action");
       let URL = route + actions;
       URL = sanitizeURL(URL);
       log.info(`${action.method.toLowerCase()} ${URL.toLowerCase()}`);
 
       routeType(router, action, URL);
+      log.debug("* Process Action Done");
       return resolve();
     } catch (e) {
+      log.error(e);
       throw e;
     }
   });
@@ -33,48 +36,57 @@ function processAction(action, actions, route, router, log) {
 
 async function processActions(actions, route, routes, router, log) {
   try {
+    log.debug("* Process Actions");
     if (typeof routes[route].resources[actions] === "object") {
-      for (action in routes[route].resources[actions]) {
+      for (const action of routes[route].resources[actions]) {
         await processAction(action, actions, route, router, log);
       }
     } else {
-      console.log("Not an object");
+      log.info("Not an object");
     }
+    log.debug("* Process Actions Done");
   } catch (e) {
+    log.error(e);
     throw e;
   }
 }
 
 async function processRoutes(routes, router, log) {
   try {
+    log.debug("* Process routes");
     for (const route of Object.keys(routes)) {
       if (typeof routes[route].resources === "object") {
         await processResources(route, routes, router, log).catch(e => {
+          log.error(e);
           throw e;
         });
       } else {
-        console.log("Not an object !");
+        log.info("Not an object !");
       }
     }
-    console.log("Process Route Done");
+    log.debug("* Process Route Done");
   } catch (e) {
+    log.error(e);
     throw e;
   }
 }
 
 async function processResources(route, routes, router, log) {
   try {
+    log.debug("* Process Resources");
     for (const actions of Object.keys(routes[route].resources)) {
       if (typeof routes[route].resources[actions] === "object") {
         await processActions(actions, route, routes, router, log).catch(e => {
+          log.error(e);
           throw e;
         });
       } else {
-        console.log("Not An Object");
+        log.info("Not An Object");
       }
     }
-    console.log("Process Resources Done");
+    log.debug("* Process Resources Done");
   } catch (e) {
+    log.error(e);
     throw e;
   }
 }
@@ -138,6 +150,7 @@ const CreateRoutes = (routes, router, log = console) => {
           return resolve();
         })
         .catch(e => {
+          log.error(e);
           throw e;
         });
     } catch (e) {
