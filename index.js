@@ -16,31 +16,95 @@
 
 const { sanitizeURL, routeType } = require("./lib/utils");
 
-const processRoute = (routes, router, log) => {
+function processAction(action, actions, route, router, log) {
   return new Promise((resolve, reject) => {
     try {
-      Object.keys(routes).forEach(route => {
-        if (typeof routes[route].resources === "object") {
-          Object.keys(routes[route].resources).forEach(actions => {
-            if (typeof routes[route].resources[actions] === "object") {
-              routes[route].resources[actions].forEach(action => {
-                let URL = route + actions;
-                URL = sanitizeURL(URL);
-                log.info(`${action.method.toLowerCase()} ${URL.toLowerCase()}`);
+      let URL = route + actions;
+      URL = sanitizeURL(URL);
+      log.info(`${action.method.toLowerCase()} ${URL.toLowerCase()}`);
 
-                routeType(router, action, URL);
-              });
-            }
-          });
-        }
-      });
-      console.log("Processing routes done")
+      routeType(router, action, URL);
       return resolve();
     } catch (e) {
       throw e;
     }
   });
-};
+}
+
+async function processActions(actions, route, routes, router, log) {
+  try {
+    if (typeof routes[route].resources[actions] === "object") {
+      for (action in routes[route].resources[actions]) {
+        await processAction(action, actions, route, router, log);
+      }
+    } else {
+      console.log("Not an object");
+    }
+  } catch (e) {
+    throw e;
+  }
+}
+
+async function processRoutes(routes, router, log) {
+  try {
+    for (const route of Object.keys(routes)) {
+      if (typeof routes[route].resources === "object") {
+        await processResources(route, routes, router, log).catch(e => {
+          throw e;
+        });
+      } else {
+        console.log("Not an object !");
+      }
+    }
+    console.log("Process Route Done");
+  } catch (e) {
+    throw e;
+  }
+}
+
+async function processResources(route, routes, router, log) {
+  try {
+    for (const actions of Object.keys(routes[route].resources)) {
+      if (typeof routes[route].resources[actions] === "object") {
+        await processActions(actions, route, routes, router, log).catch(e => {
+          throw e;
+        });
+      } else {
+        console.log("Not An Object");
+      }
+    }
+    console.log("Process Resources Done");
+  } catch (e) {
+    throw e;
+  }
+}
+
+// rewokr that for blocking the thread..
+// const processRoute = (routes, router, log) => {
+//   return new Promise((resolve, reject) => {
+//     try {
+//       Object.keys(routes).forEach(route => {
+//         if (typeof routes[route].resources === "object") {
+//           Object.keys(routes[route].resources).forEach(actions => {
+//             if (typeof routes[route].resources[actions] === "object") {
+//               routes[route].resources[actions].forEach(action => {
+//                 let URL = route + actions;
+//                 URL = sanitizeURL(URL);
+//                 log.info(`${action.method.toLowerCase()} ${URL.toLowerCase()}`);
+
+//                 routeType(router, action, URL);
+//               });
+//             }
+//           });
+//         }
+//       });
+//       console.log("Processing routes done");
+//       return resolve();
+//     } catch (e) {
+//       throw e;
+//     }
+//   });
+// };
 
 /**
  * this function create custom routes with parameters
@@ -68,7 +132,7 @@ const CreateRoutes = (routes, router, log = console) => {
         return reject(new Error("The log parameter must be an object"));
       }
       log.info("Creating routes");
-      Promise.all([processRoute(routes, router, log)])
+      Promise.all([processRoutes(routes, router, log)])
         .then(() => {
           log.info("Finished creating routes");
           return resolve();
