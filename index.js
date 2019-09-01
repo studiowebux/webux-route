@@ -16,6 +16,32 @@
 
 const { sanitizeURL, routeType } = require("./lib/utils");
 
+const processRoute = (routes, router, log) => {
+  return new Promise((resolve, reject) => {
+    try {
+      Object.keys(routes).forEach(route => {
+        if (typeof routes[route].resources === "object") {
+          Object.keys(routes[route].resources).forEach(actions => {
+            if (typeof routes[route].resources[actions] === "object") {
+              routes[route].resources[actions].forEach(action => {
+                let URL = route + actions;
+                URL = sanitizeURL(URL);
+                log.info(`${action.method.toLowerCase()} ${URL.toLowerCase()}`);
+
+                routeType(router, action, URL);
+              });
+            }
+          });
+        }
+      });
+      console.log("Processing routes done")
+      return resolve();
+    } catch (e) {
+      throw e;
+    }
+  });
+};
+
 /**
  * this function create custom routes with parameters
  * @param {Object} routes The routes, the routes definition, mandatory
@@ -42,23 +68,14 @@ const CreateRoutes = (routes, router, log = console) => {
         return reject(new Error("The log parameter must be an object"));
       }
       log.info("Creating routes");
-      Object.keys(routes).forEach(route => {
-        if (typeof routes[route].resources === "object") {
-          Object.keys(routes[route].resources).forEach(actions => {
-            if (typeof routes[route].resources[actions] === "object") {
-              routes[route].resources[actions].forEach(action => {
-                let URL = route + actions;
-                URL = sanitizeURL(URL);
-                log.info(`${action.method.toLowerCase()} ${URL.toLowerCase()}`);
-
-                routeType(router, action, URL);
-              });
-            }
-          });
-        }
-      });
-      log.info("Finished creating routes");
-      return resolve();
+      Promise.all([processRoute(routes, router, log)])
+        .then(() => {
+          log.info("Finished creating routes");
+          return resolve();
+        })
+        .catch(e => {
+          throw e;
+        });
     } catch (e) {
       console.error("\x1b[31m", e, "\x1b[0m");
       throw e;
