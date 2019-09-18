@@ -1,6 +1,6 @@
 {
   "name": "webux-route",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Route generator",
   "main": "index.js",
   "directories": {
