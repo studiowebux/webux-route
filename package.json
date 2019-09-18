@@ -20,5 +20,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Studio Webux S.E.N.C",
-  "license": "SEE LICENSE IN license.txt"
+  "license": "SEE LICENSE IN license.txt",
+  "dependencies": {
+    "normalize-url": "^4.3.0"
+  }
 }
