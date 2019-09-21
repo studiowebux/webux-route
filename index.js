@@ -26,23 +26,19 @@ const { processRoutes } = require("./lib/process");
 const CreateRoutes = (routes, router, log = console) => {
   return new Promise((resolve, reject) => {
     try {
-      log.info("\x1b[33m", "webux-route - Creating routes", "\x1b[0m");
+      log.info(`\x1b[33mwebux-route - Creating routes\x1b[0m`);
       Promise.all([processRoutes(routes, router, log)])
         .catch(e => {
-          log.error("\x1b[31m", "webux-route - " + e, "\x1b[0m");
+          log.error(`\x1b[31mwebux-route - ${e}\x1b[0m`);
           console.error(e);
           process.exit(1);
         })
         .then(() => {
-          log.info(
-            "\x1b[33m",
-            "webux-route - Finished creating routes",
-            "\x1b[0m"
-          );
+          log.info(`\x1b[33mwebux-route - Finished creating routes\x1b[0m`);
           return resolve();
         });
     } catch (e) {
-      log.error("\x1b[31m", "webux-route - " + e.message, "\x1b[0m");
+      log.error(`\x1b[31mwebux-route - ${e.message}\x1b[0m`);
       throw e;
     }
   });
