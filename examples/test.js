@@ -67,12 +67,27 @@ const routes = {
 
 const { CreateRoutes } = require("../index");
 
-CreateRoutes(routes, router);
+async function loadApp() {
+  try {
+    await CreateRoutes(routes, router);
 
-app.use("/", router);
+    app.use("/", router);
 
-app.use("*", (error, req, res, next) => {
-  return res.status(error.code).json({ error });
-});
+    app.use("*", (error, req, res, next) => {
+      return res.status(error.code).json({ error });
+    });
 
-app.listen(1337);
+    app.listen(1337, () => {
+      console.log("Server is listening on port 1337");
+    });
+  } catch (e) {
+    throw e;
+  }
+}
+
+try {
+  loadApp();
+} catch (e) {
+  console.error(e);
+  process.exit(1);
+}
