@@ -14,109 +14,7 @@
 
 "use strict";
 
-const { sanitizeURL, routeType } = require("./lib/utils");
-
-function processAction(action, actions, route, router, log) {
-  return new Promise((resolve, reject) => {
-    try {
-      log.debug("* Process Action");
-      let URL = route + actions;
-      URL = sanitizeURL(URL);
-      log.info(`${action.method.toLowerCase()} ${URL.toLowerCase()}`);
-
-      routeType(router, action, URL);
-      log.debug("* Process Action Done");
-      return resolve();
-    } catch (e) {
-      log.error(e);
-      throw e;
-    }
-  });
-}
-
-async function processActions(actions, route, routes, router, log) {
-  try {
-    log.debug("* Process Actions");
-    if (typeof routes[route].resources[actions] === "object") {
-      for (const action of routes[route].resources[actions]) {
-        await processAction(action, actions, route, router, log);
-      }
-    } else {
-      log.info("Not an object");
-    }
-    log.debug("* Process Actions Done");
-  } catch (e) {
-    log.error(e);
-    throw e;
-  }
-}
-
-async function processRoutes(routes, router, log) {
-  try {
-    log.debug("* Process routes");
-    for (const route of Object.keys(routes)) {
-      if (typeof routes[route].resources === "object") {
-        await processResources(route, routes, router, log).catch(e => {
-          log.error(e);
-          throw e;
-        });
-      } else {
-        log.info("Not an object !");
-      }
-    }
-    log.debug("* Process Route Done");
-  } catch (e) {
-    log.error(e);
-    throw e;
-  }
-}
-
-async function processResources(route, routes, router, log) {
-  try {
-    log.debug("* Process Resources");
-    for (const actions of Object.keys(routes[route].resources)) {
-      if (typeof routes[route].resources[actions] === "object") {
-        await processActions(actions, route, routes, router, log).catch(e => {
-          log.error(e);
-          throw e;
-        });
-      } else {
-        log.info("Not An Object");
-      }
-    }
-    log.debug("* Process Resources Done");
-  } catch (e) {
-    log.error(e);
-    throw e;
-  }
-}
-
-// rewokr that for blocking the thread..
-// const processRoute = (routes, router, log) => {
-//   return new Promise((resolve, reject) => {
-//     try {
-//       Object.keys(routes).forEach(route => {
-//         if (typeof routes[route].resources === "object") {
-//           Object.keys(routes[route].resources).forEach(actions => {
-//             if (typeof routes[route].resources[actions] === "object") {
-//               routes[route].resources[actions].forEach(action => {
-//                 let URL = route + actions;
-//                 URL = sanitizeURL(URL);
-//                 log.info(`${action.method.toLowerCase()} ${URL.toLowerCase()}`);
-
-//                 routeType(router, action, URL);
-//               });
-//             }
-//           });
-//         }
-//       });
-//       console.log("Processing routes done");
-//       return resolve();
-//     } catch (e) {
-//       throw e;
-//     }
-//   });
-// };
+const { processRoutes } = require("./lib/process");
 
 /**
  * this function create custom routes with parameters
@@ -128,33 +26,23 @@ async function processResources(route, routes, router, log) {
 const CreateRoutes = (routes, router, log = console) => {
   return new Promise((resolve, reject) => {
     try {
-      if (!routes || typeof routes !== "object") {
-        return reject(
-          new Error("The routes parameter is required and must be an object")
-        );
-      }
-      if (!router || typeof router !== "function") {
-        return reject(
-          new Error(
-            "The router parameter is required and must be an express router function"
-          )
-        );
-      }
-      if (log && typeof log !== "object") {
-        return reject(new Error("The log parameter must be an object"));
-      }
-      log.info("Creating routes");
+      log.info("\x1b[33m", "webux-route - Creating routes", "\x1b[0m");
       Promise.all([processRoutes(routes, router, log)])
-        .then(() => {
-          log.info("Finished creating routes");
-          return resolve();
-        })
         .catch(e => {
-          log.error(e);
-          throw e;
+          log.error("\x1b[31m", "webux-route - " + e, "\x1b[0m");
+          console.error(e);
+          process.exit(1);
+        })
+        .then(() => {
+          log.info(
+            "\x1b[33m",
+            "webux-route - Finished creating routes",
+            "\x1b[0m"
+          );
+          return resolve();
         });
     } catch (e) {
-      console.error("\x1b[31m", e, "\x1b[0m");
+      log.error("\x1b[31m", "webux-route - " + e.message, "\x1b[0m");
       throw e;
     }
   });
