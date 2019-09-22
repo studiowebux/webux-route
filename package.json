@@ -14,7 +14,8 @@
   "devDependencies": {
     "express": "^4.17.1",
     "joi": "^14.3.1",
-    "webux-validator": "^1.1.1"
+    "webux-validator": "^1.1.1",
+    "winston": "^3.2.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
