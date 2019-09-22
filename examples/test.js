@@ -62,14 +62,353 @@ const routes = {
         }
       ]
     }
+  },
+  "/user2": {
+    resources: {
+      "/": [
+        {
+          method: "get",
+          middlewares: [isAuthenticated(), query()],
+          action: require(__dirname + "/actions/user/find").route
+        },
+        {
+          method: "post",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/create").route
+        }
+      ],
+      "/:id": [
+        {
+          method: "get",
+          middlewares: [webuxValidator.MongoID(userValidator.MongoID)],
+          action: require(__dirname + "/actions/user/findOne").route
+        },
+        {
+          method: "put",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/update").route
+        },
+        {
+          method: "delete",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/remove").route
+        }
+      ]
+    }
+  },
+  "/user10": {
+    resources: {
+      "/": [
+        {
+          method: "get",
+          middlewares: [isAuthenticated(), query()],
+          action: require(__dirname + "/actions/user/find").route
+        },
+        {
+          method: "post",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/create").route
+        }
+      ],
+      "/:id": [
+        {
+          method: "get",
+          middlewares: [webuxValidator.MongoID(userValidator.MongoID)],
+          action: require(__dirname + "/actions/user/findOne").route
+        },
+        {
+          method: "put",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/update").route
+        },
+        {
+          method: "delete",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/remove").route
+        }
+      ]
+    }
+  },
+  "/user9": {
+    resources: {
+      "/": [
+        {
+          method: "get",
+          middlewares: [isAuthenticated(), query()],
+          action: require(__dirname + "/actions/user/find").route
+        },
+        {
+          method: "post",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/create").route
+        }
+      ],
+      "/:id": [
+        {
+          method: "get",
+          middlewares: [webuxValidator.MongoID(userValidator.MongoID)],
+          action: require(__dirname + "/actions/user/findOne").route
+        },
+        {
+          method: "put",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/update").route
+        },
+        {
+          method: "delete",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/remove").route
+        }
+      ]
+    }
+  },
+  "/user8": {
+    resources: {
+      "/": [
+        {
+          method: "get",
+          middlewares: [isAuthenticated(), query()],
+          action: require(__dirname + "/actions/user/find").route
+        },
+        {
+          method: "post",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/create").route
+        }
+      ],
+      "/:id": [
+        {
+          method: "get",
+          middlewares: [webuxValidator.MongoID(userValidator.MongoID)],
+          action: require(__dirname + "/actions/user/findOne").route
+        },
+        {
+          method: "put",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/update").route
+        },
+        {
+          method: "delete",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/remove").route
+        }
+      ]
+    }
+  },
+  "/user7": {
+    resources: {
+      "/": [
+        {
+          method: "get",
+          middlewares: [isAuthenticated(), query()],
+          action: require(__dirname + "/actions/user/find").route
+        },
+        {
+          method: "post",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/create").route
+        }
+      ],
+      "/:id": [
+        {
+          method: "get",
+          middlewares: [webuxValidator.MongoID(userValidator.MongoID)],
+          action: require(__dirname + "/actions/user/findOne").route
+        },
+        {
+          method: "put",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/update").route
+        },
+        {
+          method: "delete",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/remove").route
+        }
+      ]
+    }
+  },
+  "/user6": {
+    resources: {
+      "/": [
+        {
+          method: "get",
+          middlewares: [isAuthenticated(), query()],
+          action: require(__dirname + "/actions/user/find").route
+        },
+        {
+          method: "post",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/create").route
+        }
+      ],
+      "/:id": [
+        {
+          method: "get",
+          middlewares: [webuxValidator.MongoID(userValidator.MongoID)],
+          action: require(__dirname + "/actions/user/findOne").route
+        },
+        {
+          method: "put",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/update").route
+        },
+        {
+          method: "delete",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/remove").route
+        }
+      ]
+    }
+  },
+  "/user5": {
+    resources: {
+      "/": [
+        {
+          method: "get",
+          middlewares: [isAuthenticated(), query()],
+          action: require(__dirname + "/actions/user/find").route
+        },
+        {
+          method: "post",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/create").route
+        }
+      ],
+      "/:id": [
+        {
+          method: "get",
+          middlewares: [webuxValidator.MongoID(userValidator.MongoID)],
+          action: require(__dirname + "/actions/user/findOne").route
+        },
+        {
+          method: "put",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/update").route
+        },
+        {
+          method: "delete",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/remove").route
+        }
+      ]
+    }
+  },
+  "/user4": {
+    resources: {
+      "/": [
+        {
+          method: "get",
+          middlewares: [isAuthenticated(), query()],
+          action: require(__dirname + "/actions/user/find").route
+        },
+        {
+          method: "post",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/create").route
+        }
+      ],
+      "/:id": [
+        {
+          method: "get",
+          middlewares: [webuxValidator.MongoID(userValidator.MongoID)],
+          action: require(__dirname + "/actions/user/findOne").route
+        },
+        {
+          method: "put",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/update").route
+        },
+        {
+          method: "delete",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/remove").route
+        }
+      ]
+    }
+  },
+  "/user3": {
+    resources: {
+      "/": [
+        {
+          method: "get",
+          middlewares: [isAuthenticated(), query()],
+          action: require(__dirname + "/actions/user/find").route
+        },
+        {
+          method: "post",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/create").route
+        }
+      ],
+      "/:id": [
+        {
+          method: "get",
+          middlewares: [webuxValidator.MongoID(userValidator.MongoID)],
+          action: require(__dirname + "/actions/user/findOne").route
+        },
+        {
+          method: "put",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/update").route
+        },
+        {
+          method: "delete",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/remove").route
+        }
+      ]
+    }
+  },
+  "/user1": {
+    resources: {
+      "/": [
+        {
+          method: "get",
+          middlewares: [isAuthenticated(), query()],
+          action: require(__dirname + "/actions/user/find").route
+        },
+        {
+          method: "post",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/create").route
+        }
+      ],
+      "/:id": [
+        {
+          method: "get",
+          middlewares: [webuxValidator.MongoID(userValidator.MongoID)],
+          action: require(__dirname + "/actions/user/findOne").route
+        },
+        {
+          method: "put",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/update").route
+        },
+        {
+          method: "delete",
+          middlewares: [],
+          action: require(__dirname + "/actions/user/remove").route
+        }
+      ]
+    }
   }
 };
 
 const { CreateRoutes } = require("../index");
 
+function initRoutes() {
+  return new Promise(async resolve => {
+    await CreateRoutes(routes, router);
+    return resolve();
+  });
+}
+
 async function loadApp() {
   try {
-    await CreateRoutes(routes, router);
+    await initRoutes();
+    
+    console.log("DONE !");
 
     app.use("/", router);
 
