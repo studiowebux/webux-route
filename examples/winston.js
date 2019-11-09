@@ -3,6 +3,8 @@ const router = express.Router();
 const app = express();
 const winston = require("winston");
 
+const waitForLogger = require("./waitForLogger");
+
 const logger = winston.createLogger({
   level: "silly",
   format: winston.format.json(),
@@ -12,7 +14,7 @@ const logger = winston.createLogger({
 
 // middleware
 const userValidator = require("./validator/user");
-const webuxValidator = require("webux-validator");
+const webuxValidator = require("@studiowebux/validator");
 
 // middleware
 const query = () => {
@@ -405,18 +407,35 @@ const routes = {
 
 const { CreateRoutes } = require("../index");
 
-function initRoutes() {
-  return new Promise(async resolve => {
-    await CreateRoutes(routes, router, logger);
-    return resolve();
+async function initRoutes() {
+  await CreateRoutes(routes, router, logger);
+  // await waitForLogger(logger);
+}
+
+function that() {
+  return new Promise(resolve => {
+    logger.info("Print Something on the screen");
+    logger.info("Print Something else on the screen");
+    logger.info("Print Another thing on the screen");
+    logger.info("Print Maybe this too ? on the screen");
+    resolve();
   });
+}
+
+async function something() {
+  await that();
 }
 
 async function loadApp() {
   try {
     await initRoutes();
+    logger.info("Init Routes Done !")
+    await something();
+    logger.info("Something Done !")
 
-    logger.info("DONE !");
+
+    console.log("Done !@");
+    logger.info("Application ready to start !");
 
     app.use("/", router);
 
