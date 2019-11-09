@@ -12,7 +12,7 @@ const logger = winston.createLogger({
 
 // middleware
 const userValidator = require("./validator/user");
-const webuxValidator = require("webux-validator");
+const webuxValidator = require("@studiowebux/validator");
 
 // middleware
 const query = () => {

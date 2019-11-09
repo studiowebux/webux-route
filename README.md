@@ -5,7 +5,7 @@ This module create route based on a configuration file, you have to provide the 
 # Installation
 
 ```bash
-npm i --save webux-route
+npm i --save @studiowebux/route
 ```
 
 # Usage
@@ -14,7 +14,7 @@ Routes configuration example,
 
 ```
 const { isAuthenticated, query } = require('./some-middleware');
-const webuxValidator = require('webux-validator');
+const webuxValidator = require('@studiowebux/validator');
 const userValidator = require('./validator/user');
 
 const routes = {
@@ -60,7 +60,7 @@ Route creation example,
 const express = require("express");
 const router = express.Router();
 const app = express();
-const { CreateRoutes } = require("webux-route");
+const { CreateRoutes } = require("@studiowebux/route");
 
 const routes = {...};
 
