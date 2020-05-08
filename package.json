@@ -1,0 +1,22 @@
+{
+  "name": "@studiowebux/route",
+  "version": "2.0.0",
+  "description": "Route generator, static resources and custom responses",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "homepage": "https://github.com/studiowebux/webux-route",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/studiowebux/webux-route.git"
+  },
+  "devDependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Studio Webux S.E.N.C",
+  "license": "SEE LICENSE IN license.txt"
+}
