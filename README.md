@@ -16,6 +16,8 @@ For more details (EN/FR) : <a href="https://github.com/studiowebux/webux-route/w
 npm install --save @studiowebux/route
 ```
 
+[NPM](https://www.npmjs.com/package/@studiowebux/route)
+
 ## Usage
 
 ## Configuration

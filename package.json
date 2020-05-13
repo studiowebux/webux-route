@@ -2,7 +2,7 @@
   "name": "@studiowebux/route",
   "version": "2.0.1",
   "description": "Route generator, static resources and custom responses",
-  "main": "index.js",
+  "main": "src/index.js",
   "directories": {
     "test": "tests"
   },
