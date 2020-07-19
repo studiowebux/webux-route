@@ -5,9 +5,7 @@
  * License: All rights reserved Studio Webux S.E.N.C 2015-Present
  */
 
-"use strict";
-
-const path = require("path");
+const path = require('path');
 
 /**
  * Load static resources
@@ -17,20 +15,19 @@ const path = require("path");
  * @param {Function} log The log function, optional, by default console
  * @returns {Promise}
  */
-const serveStatic = (resources, app, express, log = console) => {
-  return new Promise((resolve, reject) => {
-    resources.forEach((resource) => {
-      log.info(
-        `\x1b[33mwebux-static - Link ${resource.path} to ${resource.resource}\x1b[0m`
-      );
-      if (!path.isAbsolute(resource.resource)) {
-        return reject(new Error("The resource path must be absolute"));
-      }
-      app.use(resource.path, express.static(resource.resource));
-    });
-
-    return resolve("Static resources loaded !");
+const serveStatic = (resources, app, express, log = console) => new Promise((resolve, reject) => {
+  resources.forEach((resource) => {
+    log.info(
+      `\x1b[33mwebux-static - Link ${resource.path} to ${resource.resource}\x1b[0m`,
+    );
+    if (!path.isAbsolute(resource.resource)) {
+      return reject(new Error('The resource path must be absolute'));
+    }
+    app.use(resource.path, express.static(resource.resource));
+    return resource;
   });
-};
+
+  return resolve('Static resources loaded !');
+});
 
 module.exports = serveStatic;

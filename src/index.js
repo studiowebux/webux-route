@@ -5,11 +5,9 @@
  * License: All rights reserved Studio Webux S.E.N.C 2015-Present
  */
 
-"use strict";
-
-const response = require("./response/index");
-const serveStatic = require("./static/index");
-const createRoute = require("./route/index");
+const response = require('./response/index');
+const serveStatic = require('./static/index');
+const createRoute = require('./route/index');
 
 /**
  * @class Route
@@ -22,14 +20,15 @@ class Route {
    * @returns {VoidFunction}
    */
   constructor(opts, log = console) {
-    this.config = opts;
+    this.config = opts || {};
     this.log = log;
   }
 
   /**
    * Load routes based on the configuration
    * @param {Object} router Express Router function
-   * @param {Object} routes The routes configuration (if not provided, the one from config.routes is loaded)
+   * @param {Object} routes The routes configuration
+   * (if not provided, the one from config.routes is loaded)
    * @returns {Promise}
    */
   LoadRoute(router, routes = null) {
@@ -40,7 +39,8 @@ class Route {
    * Load the static resources based on the configuration
    * @param {Object} app Express application
    * @param {Object} express Express instance
-   * @param {String} resources The resources array (if not provided, the one from config.resources is loaded)
+   * @param {String} resources The resources array
+   * (if not provided, the one from config.resources is loaded)
    * @returns {Promise}
    */
   LoadStatic(app, express, resources = null) {
@@ -48,7 +48,7 @@ class Route {
       resources || this.config.resources,
       app,
       express,
-      this.log
+      this.log,
     );
   }
 
@@ -57,9 +57,9 @@ class Route {
    * @param {Object} app Express application
    * @returns {VoidFunction}
    */
+  // eslint-disable-next-line class-methods-use-this
   LoadResponse(app) {
     response(app);
-    return;
   }
 }
 

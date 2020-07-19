@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /**
  * File: index.js
  * Author: Tommy Gingras
@@ -5,9 +6,7 @@
  * License: All rights reserved Studio Webux S.E.N.C 2015-Present
  */
 
-"use strict";
-
-const defMsg = require("./constants");
+const defMsg = require('./constants');
 
 /**
  * return success (200)
@@ -19,8 +18,8 @@ const defMsg = require("./constants");
 function success(body, msg, devMsg) {
   this.status(200);
   this.json({
-    message: msg || "",
-    devMessage: devMsg || "",
+    message: msg || '',
+    devMessage: devMsg || '',
     success: true,
     code: 200,
     body,
@@ -37,8 +36,8 @@ function success(body, msg, devMsg) {
 function created(body, msg, devMsg) {
   this.status(201);
   this.json({
-    message: msg || "",
-    devMessage: devMsg || "",
+    message: msg || '',
+    devMessage: devMsg || '',
     success: true,
     code: 201,
     body,
@@ -55,8 +54,8 @@ function created(body, msg, devMsg) {
 function updated(body, msg, devMsg) {
   this.status(200);
   this.json({
-    message: msg || "",
-    devMessage: devMsg || "",
+    message: msg || '',
+    devMessage: devMsg || '',
     success: true,
     code: 200,
     body,
@@ -73,11 +72,11 @@ function updated(body, msg, devMsg) {
 function deleted(id, msg, devMsg) {
   this.status(204);
   this.json({
-    message: msg || "",
-    devMessage: devMsg || "",
+    message: msg || '',
+    devMessage: devMsg || '',
     success: true,
     code: 204,
-    id: id,
+    id,
   });
 }
 
@@ -90,8 +89,8 @@ function deleted(id, msg, devMsg) {
 function forbidden(msg, devMsg) {
   this.status(403);
   this.json({
-    message: msg || defMsg["MSG_FORBIDDEN"],
-    devMessage: devMsg || defMsg["DEVMSG_FORBIDDEN"],
+    message: msg || defMsg.MSG_FORBIDDEN,
+    devMessage: devMsg || defMsg.DEVMSG_FORBIDDEN,
     success: false,
     code: 403,
   });
@@ -106,8 +105,8 @@ function forbidden(msg, devMsg) {
 function badRequest(msg, devMsg) {
   this.status(400);
   this.json({
-    message: msg || defMsg["MSG_BADREQUEST"],
-    devMessage: devMsg || "",
+    message: msg || defMsg.MSG_BADREQUEST,
+    devMessage: devMsg || '',
     success: false,
     code: 400,
   });
@@ -122,8 +121,8 @@ function badRequest(msg, devMsg) {
 function serverError(msg, devMsg) {
   this.status(500);
   this.json({
-    message: msg || defMsg["MSG_SERVERERROR"],
-    devMessage: devMsg || "",
+    message: msg || defMsg.MSG_SERVERERROR,
+    devMessage: devMsg || '',
     success: false,
     code: 500,
   });
@@ -138,8 +137,8 @@ function serverError(msg, devMsg) {
 function notFound(msg, devMsg) {
   this.status(404);
   this.json({
-    message: msg || defMsg["MSG_NOTFOUND"],
-    devMessage: devMsg || defMsg["DEVMSG_NOTFOUND"],
+    message: msg || defMsg.MSG_NOTFOUND,
+    devMessage: devMsg || defMsg.DEVMSG_NOTFOUND,
     success: false,
     code: 404,
   });
@@ -165,8 +164,8 @@ function custom(code, object) {
 function unprocessable(msg, devMsg) {
   this.status(422);
   this.json({
-    message: msg || defMsg["MSG_UNPROCESSABLE"],
-    devMessage: devMsg || defMsg["DEVMSG_UNPROCESSABLE"],
+    message: msg || defMsg.MSG_UNPROCESSABLE,
+    devMessage: devMsg || defMsg.DEVMSG_UNPROCESSABLE,
     success: false,
     code: 422,
   });
@@ -181,8 +180,8 @@ function unprocessable(msg, devMsg) {
 function unauthorized(msg, devMsg) {
   this.status(401);
   this.json({
-    message: msg || defMsg["MSG_UNAUTHORIZED"],
-    devMessage: devMsg || defMsg["DEVMSG_UNAUTHORIZED"],
+    message: msg || defMsg.MSG_UNAUTHORIZED,
+    devMessage: devMsg || defMsg.DEVMSG_UNAUTHORIZED,
     success: false,
     code: 401,
   });
@@ -194,28 +193,28 @@ function unauthorized(msg, devMsg) {
  * @returns {VoidFunction} return nothing.
  */
 function hook(express, log = console) {
-  log.info("Attach `res.success` response");
-  express.response["success"] = success;
-  log.info("Attach `res.created` response");
-  express.response["created"] = created;
-  log.info("Attach `res.updated` response");
-  express.response["updated"] = updated;
-  log.info("Attach `res.deleted` response");
-  express.response["deleted"] = deleted;
-  log.info("Attach `res.forbidden` response");
-  express.response["forbidden"] = forbidden;
-  log.info("Attach `res.badRequest` response");
-  express.response["badRequest"] = badRequest;
-  log.info("Attach `res.serverError` response");
-  express.response["serverError"] = serverError;
-  log.info("Attach `res.notFound` response");
-  express.response["notFound"] = notFound;
-  log.info("Attach `res.unauthorized` response");
-  express.response["unauthorized"] = unauthorized;
-  log.info("Attach `res.unprocessable` response");
-  express.response["unprocessable"] = unprocessable;
-  log.info("Attach `res.custom` response");
-  express.response["custom"] = custom;
+  log.info('Attach `res.success` response');
+  express.response.success = success;
+  log.info('Attach `res.created` response');
+  express.response.created = created;
+  log.info('Attach `res.updated` response');
+  express.response.updated = updated;
+  log.info('Attach `res.deleted` response');
+  express.response.deleted = deleted;
+  log.info('Attach `res.forbidden` response');
+  express.response.forbidden = forbidden;
+  log.info('Attach `res.badRequest` response');
+  express.response.badRequest = badRequest;
+  log.info('Attach `res.serverError` response');
+  express.response.serverError = serverError;
+  log.info('Attach `res.notFound` response');
+  express.response.notFound = notFound;
+  log.info('Attach `res.unauthorized` response');
+  express.response.unauthorized = unauthorized;
+  log.info('Attach `res.unprocessable` response');
+  express.response.unprocessable = unprocessable;
+  log.info('Attach `res.custom` response');
+  express.response.custom = custom;
 }
 
 module.exports = hook;
