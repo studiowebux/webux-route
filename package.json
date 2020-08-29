@@ -1,6 +1,6 @@
 {
   "name": "@studiowebux/route",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Route generator, static resources and custom responses",
   "main": "src/index.js",
   "homepage": "https://github.com/studiowebux/webux-route",
